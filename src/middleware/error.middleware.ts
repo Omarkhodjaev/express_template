@@ -15,7 +15,7 @@ export function errorHandler(
     error: {
       code: status,
       message,
-      details
-    }
+      details,
+    },
   });
 }

@@ -7,7 +7,11 @@ import { ResponseHelper } from "../utils/response";
 export class UserController {
   constructor(private userService = new UserService()) {}
 
-  async register(req: Request, res: Response, next: NextFunction): Promise<void> {
+  async register(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> {
     try {
       const dto = Object.assign(new RegisterDto(), req.body);
       const user = await this.userService.register(dto);
@@ -21,14 +25,18 @@ export class UserController {
     try {
       const dto = Object.assign(new LoginDto(), req.body);
       const result = await this.userService.login(dto);
-      res.set('Authorization', `Bearer ${result.token}`);
+      res.set("Authorization", `Bearer ${result.token}`);
       ResponseHelper.success(res, result, "Login successful");
     } catch (err) {
       next(err);
     }
   }
 
-  async getUsers(req: Request, res: Response, next: NextFunction): Promise<void> {
+  async getUsers(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> {
     try {
       const users = await this.userService.getUsers();
       ResponseHelper.success(res, users, "User list");
@@ -37,7 +45,11 @@ export class UserController {
     }
   }
 
-  async getUser(req: Request, res: Response, next: NextFunction): Promise<void> {
+  async getUser(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> {
     try {
       const user = await this.userService.getUser(Number(req.params.id));
       ResponseHelper.success(res, user, "User found");
@@ -46,17 +58,28 @@ export class UserController {
     }
   }
 
-  async updateUser(req: Request, res: Response, next: NextFunction): Promise<void> {
+  async updateUser(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> {
     try {
       const dto = Object.assign(new UpdateUserDto(), req.body);
-      const user = await this.userService.updateUser(Number(req.params.id), dto);
+      const user = await this.userService.updateUser(
+        Number(req.params.id),
+        dto
+      );
       ResponseHelper.success(res, user, "User updated");
     } catch (err) {
       next(err);
     }
   }
 
-  async deleteUser(req: Request, res: Response, next: NextFunction): Promise<void> {
+  async deleteUser(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> {
     try {
       const result = await this.userService.deleteUser(Number(req.params.id));
       ResponseHelper.success(res, result, "User deleted");
